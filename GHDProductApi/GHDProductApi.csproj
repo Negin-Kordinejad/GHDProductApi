@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,8 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+   
     <PackageReference Include="MediatR" Version="12.2.0" />
+   
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+   
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GHDProductApi.Core\GHDProductApi.Core.csproj" />
+    <ProjectReference Include="..\GHDProductApi.Infrastructure\GHDProductApi.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
