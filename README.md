@@ -10,7 +10,7 @@ This web application is a REST API microservice responsible for CRUD (Create, Re
 - WebApplication:
   - A REST API Project. injecting mediator to crud oparation.
 - WebApplication.Core:
-  - cqrs design pathern. 
+  - CQRS design pathern. 
   - request handlers using the [MediatR] library
   - pipeline behaviours [MediatR]  that perform actions before executing a request handler
   - validation logic using [FluentValidation]
@@ -26,6 +26,10 @@ This web application is a REST API microservice responsible for CRUD (Create, Re
 ## Test
 - Swagger open Apii / Postman
 - Integration tests
-- 
+
+## ToDo
+- Refactoring
+- Add more unit tests.
+
 ## Run
  - Add-Migration InitialCreate
