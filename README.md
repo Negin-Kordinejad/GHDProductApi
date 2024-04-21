@@ -1,7 +1,6 @@
 # GHD .NET Core Tech Test
-
 - [Description](Description)
-- [Architectur & Design Pathern](Architectur & Design Pathern)
+- [Architecture and Design Pathern](Architecture and Design Pathern)
 - [Logging](Logging)
 
 ## Description
@@ -23,3 +22,10 @@ This web application is a REST API microservice responsible for CRUD (Create, Re
 ## Logging
 - Logs the duration it takes for any MediatR command / query handler to execute
 - Logs the exceptions that are thrown by the API
+
+## Test
+- Swagger open Apii / Postman
+- Integration tests
+- 
+## Run
+ - Add-Migration InitialCreate
