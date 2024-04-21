@@ -9,7 +9,8 @@ namespace GHDProductApi.Infrastructure.Contexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=:memory:");
+            optionsBuilder.UseSqlServer("Data Source=(localDb)\\MSSQLLocalDb;initial Catalog=GHDProductManager");
+            // optionsBuilder.UseSqlite("Data Source=:memory:");
 
             base.OnConfiguring(optionsBuilder);
         }
