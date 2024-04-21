@@ -1,0 +1,6 @@
+@GHDProductApi_HostAddress = http://localhost:5064
+
+GET {{GHDProductApi_HostAddress}}/product/
+Accept: application/json
+
+###
