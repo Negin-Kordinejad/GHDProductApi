@@ -9,7 +9,7 @@ namespace GHDProductApi.Infrastructure.Contexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseInMemoryDatabase("InMemoryDb");
+            optionsBuilder.UseSqlite("Data Source=:memory:");
 
             base.OnConfiguring(optionsBuilder);
         }
@@ -18,19 +18,21 @@ namespace GHDProductApi.Infrastructure.Contexts
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.HasKey(e => new { e.Id });
-                entity.Property(p => p.Name).IsRequired();
-                entity.Property(e => e.Brand).IsRequired();
+                entity.HasIndex(e => new { e.Name, e.Brand }).IsUnique();
+                entity.Property(p => p.Name).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Brand).IsRequired().HasMaxLength(100);
                 entity.Property(p => p.Price).IsRequired();
-                entity.HasIndex(e => new { e.Name, e.Brand}).IsUnique();
+
             });
 
 
-            //modelBuilder.Entity<Product>()
-            //            .HasData(
-            //                new List<Product>
-            //                {
-            //                    new Product { Id = 1, Name = "P1", Brand = "B1", Price=100 },
-            //                };
+            modelBuilder.Entity<Product>()
+                        .HasData(
+                            new List<Product>
+                            {
+                                new() { Id = 1, Name = "P1", Brand = "B1", Price=100 },
+                                new() { Id = 2, Name = "P2", Brand = "B2", Price=110 }
+                            });
 
 
             base.OnModelCreating(modelBuilder);
