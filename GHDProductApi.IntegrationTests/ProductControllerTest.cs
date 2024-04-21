@@ -20,7 +20,7 @@ namespace GHDProductApi.IntegrationTests
         }
 
         [Fact]
-        public async Task GivenProductId1_WhenGettingProduct_ThenReturnP1()
+        public async Task GivenProductId_1_WhenGettingProduct_ThenReturnP1()
         {
             // Arrange
             HttpClient client = _factory.CreateClient();
@@ -46,7 +46,7 @@ namespace GHDProductApi.IntegrationTests
         }
 
         [Fact]
-        public async Task GivenProductId100_WhenGettingProduct_ThenReturnUnSuccessfulRespomce()
+        public async Task GivenProductId100_WhenGettingProduct_Then_Return_UnSuccessfulResponse()
         {
             // Arrange
             HttpClient client = _factory.CreateClient();
@@ -120,7 +120,7 @@ namespace GHDProductApi.IntegrationTests
         }
 
         [Fact]
-        public async Task GivenProductId1_WhenAddingProduct_ThenReturnProduct()
+        public async Task GivenProduct_WhenAddingProduct_ThenReturnProduct()
         {
             // Arrange
             HttpClient client = _factory.CreateClient();
@@ -146,6 +146,47 @@ namespace GHDProductApi.IntegrationTests
                 .Be("BX2");
             productDto.Price.Should()
                 .Be(1200);
+        }
+
+        [Fact]
+        public async Task GivenProduct_WhenAddingProduct_IFExists_Then_Return_UnSuccessfulResponse()
+        {
+            // Arrange
+            HttpClient client = _factory.CreateClient();
+            var url = $"{client.BaseAddress}Product/Add";
+            var command = new CreateProductCommand
+            {
+                Name = "P1",
+                Brand = "B1",
+                Price = 100
+            };
+
+            string stringContent = JsonConvert.SerializeObject(command);
+
+            // Act
+            HttpResponseMessage responseMessage = await client.PostAsync(url, new StringContent(stringContent, Encoding.UTF8, MediaTypeNames.Application.Json));
+
+            // Assert
+            var productDto = await responseMessage.DeserializeContentAsync<Response<ProductDto>>();
+
+            productDto.IsSuccessful.Should().BeFalse();
+        }
+
+        [Fact]
+        public async Task GivenProduct_WhenDeleteingProduct_Then_ReturnDeleted()
+        {
+            // Arrange
+            HttpClient client = _factory.CreateClient();
+            var url = $"{client.BaseAddress}Product?id=1";
+
+            // Act
+            var responseMessage = await client.DeleteAsync(url);
+
+
+            // Assert
+            var productDto = await responseMessage.DeserializeContentAsync<ProductDto>();
+
+            productDto.ProductId.Should().Be(1);
         }
     }
 }
