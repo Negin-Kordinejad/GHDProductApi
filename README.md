@@ -11,14 +11,14 @@ This web application is a REST API microservice responsible for CRUD (Create, Re
   - A REST API Project. injecting mediator to crud oparation.
 - GHDProductApi.Core:
   - CQRS design pathern. 
-  - request handlers using the [MediatR] library
-  - pipeline behaviours [MediatR]  that perform actions before executing a request handler
-  - validation logic using [FluentValidation]
-  - map entities to DTOs using [AutoMapper]
+  - Request handlers using the [MediatR] library
+  - Pipeline behaviours [MediatR]  that perform actions before executing a request handler
+  - Validation logic using [FluentValidation]
+  - Map entities to DTOs using [AutoMapper]
 - GHDProductApi.Infrastructure:
-  - perform CRUD operations using [EF Core] and [LINQ]
+  - Perform CRUD operations using [EF Core] and [LINQ]
 - GHDProductApi.IntegrationTests
-  - tests to satisfy the testing scenarios
+  - Tests to satisfy the testing scenarios
 ## Logging
 - Logs the duration it takes for any MediatR command / query handler to execute
 - Logs the exceptions that are thrown by the API
