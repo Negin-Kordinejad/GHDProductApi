@@ -7,18 +7,18 @@
 This web application is a REST API microservice responsible for CRUD (Create, Read, Update, Delete) operations regarding the `product` entity.
 
 ## Architectur & Design Pathern
-- WebApplication:
+- GHDProductApi:
   - A REST API Project. injecting mediator to crud oparation.
-- WebApplication.Core:
-  - cqrs design pathern. 
-  - request handlers using the [MediatR] library
-  - pipeline behaviours [MediatR]  that perform actions before executing a request handler
-  - validation logic using [FluentValidation]
-  - map entities to DTOs using [AutoMapper]
-- WebApplication.Infrastructure:
-  - perform CRUD operations using [EF Core] and [LINQ]
-- WebApplication.IntegrationTests
-  - tests to satisfy the testing scenarios
+- GHDProductApi.Core:
+  - CQRS design pathern. 
+  - Request handlers using the [MediatR] library
+  - Pipeline behaviours [MediatR]  that perform actions before executing a request handler
+  - Validation logic using [FluentValidation]
+  - Map entities to DTOs using [AutoMapper]
+- GHDProductApi.Infrastructure:
+  - Perform CRUD operations using [EF Core] and [LINQ]
+- GHDProductApi.IntegrationTests
+  - Tests to satisfy the testing scenarios
 ## Logging
 - Logs the duration it takes for any MediatR command / query handler to execute
 - Logs the exceptions that are thrown by the API
@@ -26,6 +26,10 @@ This web application is a REST API microservice responsible for CRUD (Create, Re
 ## Test
 - Swagger open Apii / Postman
 - Integration tests
-- 
+
+## ToDo
+- Refactoring
+- Add more unit tests.
+
 ## Run
  - Add-Migration InitialCreate
