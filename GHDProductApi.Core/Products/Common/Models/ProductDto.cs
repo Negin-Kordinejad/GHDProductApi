@@ -9,7 +9,7 @@ namespace GHDProductApi.Core.Products.Common.Models
         public int ProductId { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Brand { get; set; } = string.Empty;
-        public decimal Price { get; set; }
+        public Money Price { get; set; }
 
         public void Mapping(Profile profile)
         {

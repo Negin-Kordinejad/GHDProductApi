@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GHDProductApi.Infrastructure.Entities
@@ -18,6 +19,9 @@ namespace GHDProductApi.Infrastructure.Entities
         public string Brand { get; set; } = string.Empty;
 
         [Required]
-        public decimal Price { get; set; }
+        public Money Price { get;  set; }
     }
+
+    [Owned]
+    public record Money(string Currency, decimal Amount);
 }

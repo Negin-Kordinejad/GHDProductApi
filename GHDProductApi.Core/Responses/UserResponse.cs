@@ -8,7 +8,7 @@
             ErrorMessages = new List<ResponseError>();
         }
 
-        public bool IsSuccessful => ErrorMessages.Any() == false;
+        public bool IsSuccessful => !ErrorMessages.Any();
 
         public IList<ResponseError> ErrorMessages { get; set; }
 

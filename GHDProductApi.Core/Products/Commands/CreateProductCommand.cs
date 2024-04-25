@@ -11,8 +11,8 @@ namespace GHDProductApi.Core.Products.Commands
     {
         public string Name { get; set; } = string.Empty;
         public string Brand { get; set; } = string.Empty;
-        public decimal Price { get; set; }
-
+        public string Currency { get; set; } = "AUD";
+        public decimal Amount { get; set; }
         public class Validator : AbstractValidator<CreateProductCommand>
         {
             public Validator()
@@ -23,7 +23,7 @@ namespace GHDProductApi.Core.Products.Commands
                 RuleFor(x => x.Brand)
                     .NotEmpty();
 
-                RuleFor(x => x.Price)
+                RuleFor(x => x.Amount)
                     .GreaterThan(0);
             }
         }
@@ -45,7 +45,7 @@ namespace GHDProductApi.Core.Products.Commands
                 {
                     Name = request.Name,
                     Brand = request.Brand,
-                    Price = request.Price
+                    Price = new Money(request.Currency, request.Amount)
                 };
 
                 var addedProduct = await _productService.AddAsync(product, cancellationToken);

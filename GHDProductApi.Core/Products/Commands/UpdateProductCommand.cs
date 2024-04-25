@@ -2,6 +2,7 @@
 using FluentValidation;
 using GHDProductApi.Core.Products.Common.Models;
 using GHDProductApi.Core.Responses;
+using GHDProductApi.Infrastructure.Entities;
 using GHDProductApi.Infrastructure.Intefaces;
 using MediatR;
 
@@ -13,7 +14,8 @@ namespace GHDProductApi.Core.Products.Commands
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Brand { get; set; } = string.Empty;
-        public decimal Price { get; set; }
+        public string Currency { get; set; } = "AUD";
+        public decimal Amount { get; set; }
 
         public class Validator : AbstractValidator<UpdateProductCommand>
         {
@@ -42,7 +44,7 @@ namespace GHDProductApi.Core.Products.Commands
                 RuleFor(x => x.Brand)
                     .NotEmpty();
 
-                RuleFor(x => x.Price)
+                RuleFor(x => x.Amount)
                     .GreaterThan(0);
             }
 
@@ -76,7 +78,7 @@ namespace GHDProductApi.Core.Products.Commands
 
                 product.Name = request.Name;
                 product.Brand = request.Brand;
-                product.Price= request.Price;
+                product.Price = new Money(request.Currency, request.Amount);
 
                 var updatedProduct = await _productService.UpdateAsync(product, cancellationToken);
 

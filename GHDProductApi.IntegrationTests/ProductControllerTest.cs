@@ -3,6 +3,7 @@ using GHDProductApi.Core.Products.Commands;
 using GHDProductApi.Core.Products.Common.Models;
 using GHDProductApi.Core.Responses;
 using GHDProductApi.Infrastructure.Contexts;
+using GHDProductApi.Infrastructure.Entities;
 using GHDProductApi.IntegrationTests.Extensions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ namespace GHDProductApi.IntegrationTests
     {
         private readonly WebApplicationFactory<Program> _factory;
         private readonly HttpClient client;
+        private const string AUS_CURRENCY_CODE = "AUD";
 
         public ProductControllerTest(WebApplicationFactory<Program> factory)
         {
@@ -60,7 +62,7 @@ namespace GHDProductApi.IntegrationTests
                 .Be("B1");
 
             productDto.Data.Price.Should()
-                .Be(100);
+                .Be(new Money(AUS_CURRENCY_CODE, 100m));
 
         }
 
@@ -92,7 +94,9 @@ namespace GHDProductApi.IntegrationTests
                 Id = 1,
                 Name = "PX1",
                 Brand = "BX1",
-                Price = 120
+                Currency = AUS_CURRENCY_CODE,
+                Amount = 120m
+
             };
 
             string stringContent = JsonConvert.SerializeObject(command);
@@ -108,11 +112,11 @@ namespace GHDProductApi.IntegrationTests
             productDto.Brand.Should()
                 .Be("BX1");
             productDto.Price.Should()
-                .Be(120);
+                 .Be(new Money(AUS_CURRENCY_CODE, 120m));
         }
 
         [Fact]
-        public async Task GivenProductId1_WhenUpdatingProduct_InvalisPrice_ThenReturnProduct()
+        public async Task GivenProductId1_WhenUpdatingProduct_InvalidPrice_ThenReturnProduct()
         {
             // Arrange
             var url = $"{client.BaseAddress}Product/Update";
@@ -121,7 +125,8 @@ namespace GHDProductApi.IntegrationTests
                 Id = 1,
                 Name = "PX1",
                 Brand = "BX1",
-                Price = 0
+                Currency = AUS_CURRENCY_CODE,
+                Amount = 0
             };
 
             string stringContent = JsonConvert.SerializeObject(command);
@@ -144,7 +149,8 @@ namespace GHDProductApi.IntegrationTests
             {
                 Name = "PX2",
                 Brand = "BX2",
-                Price = 1200
+                Currency = AUS_CURRENCY_CODE,
+                Amount = 1200m
             };
 
             string stringContent = JsonConvert.SerializeObject(command);
@@ -160,7 +166,7 @@ namespace GHDProductApi.IntegrationTests
             productDto.Brand.Should()
                 .Be("BX2");
             productDto.Price.Should()
-                .Be(1200);
+                 .Be(new Money(AUS_CURRENCY_CODE, 1200m));
         }
 
         [Fact]
@@ -172,7 +178,8 @@ namespace GHDProductApi.IntegrationTests
             {
                 Name = "P1",
                 Brand = "B1",
-                Price = 100
+                Currency = AUS_CURRENCY_CODE,
+                Amount = 100m
             };
 
             string stringContent = JsonConvert.SerializeObject(command);

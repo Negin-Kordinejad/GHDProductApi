@@ -25,7 +25,7 @@ namespace GHDProductApi.Infrastructure.Services
 
         public async Task<int> CountAsync(CancellationToken cancellationToken = default)
         {
-            var count = await _dbContext.Products.CountAsync(cancellationToken);
+            var count = await _dbContext.Products.AsTracking().CountAsync(cancellationToken);
 
             return count;
         }

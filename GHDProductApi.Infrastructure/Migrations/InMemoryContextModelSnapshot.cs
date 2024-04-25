@@ -39,31 +39,39 @@ namespace GHDProductApi.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Name", "Brand")
                         .IsUnique();
 
                     b.ToTable("Products");
+                });
 
-                    b.HasData(
-                        new
+            modelBuilder.Entity("GHDProductApi.Infrastructure.Entities.Product", b =>
+                {
+                    b.OwnsOne("GHDProductApi.Infrastructure.Entities.Money", "Price", b1 =>
                         {
-                            Id = 1,
-                            Brand = "B1",
-                            Name = "P1",
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Brand = "B2",
-                            Name = "P2",
-                            Price = 110m
+                            b1.Property<int>("ProductId")
+                                .HasColumnType("int");
+
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("decimal(18,2)");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("nvarchar(3)");
+
+                            b1.HasKey("ProductId");
+
+                            b1.ToTable("Products");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ProductId");
                         });
+
+                    b.Navigation("Price")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
