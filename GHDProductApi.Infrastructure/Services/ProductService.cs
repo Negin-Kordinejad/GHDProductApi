@@ -12,7 +12,6 @@ namespace GHDProductApi.Infrastructure.Services
         public ProductService(InMemoryContext dbContext)
         {
             _dbContext = dbContext;
-            _dbContext.Database.EnsureDeleted();
             _dbContext.Database.EnsureCreated();
         }
 
