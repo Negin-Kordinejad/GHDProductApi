@@ -2,8 +2,10 @@ using FluentAssertions;
 using GHDProductApi.Core.Products.Commands;
 using GHDProductApi.Core.Products.Common.Models;
 using GHDProductApi.Core.Responses;
+using GHDProductApi.Infrastructure.Contexts;
 using GHDProductApi.IntegrationTests.Extensions;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Net.Mime;
 using System.Text;
@@ -13,17 +15,34 @@ namespace GHDProductApi.IntegrationTests
     public class ProductControllerTest : IClassFixture<WebApplicationFactory<Program>>
     {
         private readonly WebApplicationFactory<Program> _factory;
+        private readonly HttpClient client;
 
         public ProductControllerTest(WebApplicationFactory<Program> factory)
         {
-            _factory = factory;
+            _factory = factory
+               .WithWebHostBuilder(builder =>
+               {
+                   builder.ConfigureServices(services =>
+                   {
+                       var sp = services.BuildServiceProvider();
+                       using (var scope = sp.CreateScope())
+                       {
+                           var scopedServices = scope.ServiceProvider;
+                           var appDb = scopedServices.GetRequiredService<InMemoryContext>();
+                           appDb.Database.EnsureDeleted();
+                           appDb.Database.EnsureCreated();
+                       };
+                   });
+               });
+
+
+            client = _factory.CreateClient();
         }
 
         [Fact]
         public async Task GivenProductId_1_WhenGettingProduct_ThenReturnP1()
         {
             // Arrange
-            HttpClient client = _factory.CreateClient();
             var url = $"{client.BaseAddress}Product?id=1";
 
             // Act
@@ -49,7 +68,6 @@ namespace GHDProductApi.IntegrationTests
         public async Task GivenProductId100_WhenGettingProduct_Then_Return_UnSuccessfulResponse()
         {
             // Arrange
-            HttpClient client = _factory.CreateClient();
             var url = $"{client.BaseAddress}Product?id=100";
 
             // Act
@@ -68,7 +86,6 @@ namespace GHDProductApi.IntegrationTests
         public async Task GivenProductId1_WhenUpdatingProduct_ThenReturnProduct()
         {
             // Arrange
-            HttpClient client = _factory.CreateClient();
             var url = $"{client.BaseAddress}Product/Update";
             var command = new UpdateProductCommand
             {
@@ -98,7 +115,6 @@ namespace GHDProductApi.IntegrationTests
         public async Task GivenProductId1_WhenUpdatingProduct_InvalisPrice_ThenReturnProduct()
         {
             // Arrange
-            HttpClient client = _factory.CreateClient();
             var url = $"{client.BaseAddress}Product/Update";
             var command = new UpdateProductCommand
             {
@@ -123,7 +139,6 @@ namespace GHDProductApi.IntegrationTests
         public async Task GivenProduct_WhenAddingProduct_ThenReturnProduct()
         {
             // Arrange
-            HttpClient client = _factory.CreateClient();
             var url = $"{client.BaseAddress}Product/Add";
             var command = new CreateProductCommand
             {
@@ -152,7 +167,6 @@ namespace GHDProductApi.IntegrationTests
         public async Task GivenProduct_WhenAddingProduct_IFExists_Then_Return_UnSuccessfulResponse()
         {
             // Arrange
-            HttpClient client = _factory.CreateClient();
             var url = $"{client.BaseAddress}Product/Add";
             var command = new CreateProductCommand
             {
@@ -176,7 +190,6 @@ namespace GHDProductApi.IntegrationTests
         public async Task GivenProduct_WhenDeleteingProduct_Then_ReturnDeleted()
         {
             // Arrange
-            HttpClient client = _factory.CreateClient();
             var url = $"{client.BaseAddress}Product?id=1";
 
             // Act
