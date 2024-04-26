@@ -7,9 +7,9 @@ namespace GHDProductApi.Infrastructure.Services
 {
     public class ProductService : IProductService
     {
-        private readonly InMemoryContext _dbContext;
+        private readonly ProductDbContext _dbContext;
 
-        public ProductService(InMemoryContext dbContext)
+        public ProductService(ProductDbContext dbContext)
         {
             _dbContext = dbContext;
             _dbContext.Database.EnsureCreated();

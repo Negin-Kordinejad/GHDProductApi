@@ -30,7 +30,7 @@ namespace GHDProductApi.IntegrationTests
                        using (var scope = sp.CreateScope())
                        {
                            var scopedServices = scope.ServiceProvider;
-                           var appDb = scopedServices.GetRequiredService<InMemoryContext>();
+                           var appDb = scopedServices.GetRequiredService<ProductDbContext>();
                            appDb.Database.EnsureDeleted();
                            appDb.Database.EnsureCreated();
                        };

@@ -9,7 +9,7 @@ namespace GHDProductApi.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
-            services.AddDbContext<InMemoryContext>();
+            services.AddDbContext<ProductDbContext>();
 
             services.AddScoped<IProductService, ProductService>();
 

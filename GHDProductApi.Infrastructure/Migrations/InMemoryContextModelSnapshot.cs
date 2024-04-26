@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GHDProductApi.Infrastructure.Migrations
 {
-    [DbContext(typeof(InMemoryContext))]
+    [DbContext(typeof(ProductDbContext))]
     partial class InMemoryContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

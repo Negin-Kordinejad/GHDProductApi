@@ -1,17 +1,21 @@
 ﻿using GHDProductApi.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using System.Reflection.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace GHDProductApi.Infrastructure.Contexts
 {
-    public class InMemoryContext : DbContext
+    public class ProductDbContext : DbContext
     {
+        private readonly IConfiguration _config;
         public DbSet<Product> Products => Set<Product>();
 
+        public ProductDbContext (IConfiguration config)
+        {
+            _config = config;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(localDb)\\MSSQLLocalDb;initial Catalog=GHDProductManager");
+            optionsBuilder.UseSqlServer(_config.GetConnectionString("SqlConnection"));
             // optionsBuilder.UseSqlite("Data Source=:memory:");
 
             base.OnConfiguring(optionsBuilder);

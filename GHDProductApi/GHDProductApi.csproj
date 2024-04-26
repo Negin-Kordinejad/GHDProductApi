@@ -8,6 +8,8 @@
 
   <ItemGroup>
    
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="8.0.2" />
+   
     <PackageReference Include="MediatR" Version="12.2.0" />
    
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />

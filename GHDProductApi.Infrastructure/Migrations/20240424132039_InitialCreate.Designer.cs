@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GHDProductApi.Infrastructure.Migrations
 {
-    [DbContext(typeof(InMemoryContext))]
+    [DbContext(typeof(ProductDbContext))]
     [Migration("20240424132039_InitialCreate")]
     partial class InitialCreate
     {
