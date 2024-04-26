@@ -3,6 +3,7 @@ using GHDProductApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddHealthChecks().AddSqlServer(builder.Configuration.GetConnectionString("SqlConnection"));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -16,7 +17,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.MapHealthChecks("/healthCheck");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseGlobalErrorHandlingMiddleware();
