@@ -17,17 +17,26 @@ namespace GHDProductApi.Controllers
         {
             _mediator = mediator;
         }
+
+        /// <summary>
+        /// Endpoint to get a product by id.
+        /// </summary>
         [HttpGet]
         [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
+        
         public async Task<IActionResult> GetProductAsync(
           [FromQuery] GetProductQuery query,
           CancellationToken cancellationToken)
         {
+          
+            
             var result = await _mediator.Send(query, cancellationToken);
             return Ok(result);
         }
 
-
+        /// <summary>
+        /// Endpoint to get a list products in paging.
+        /// </summary>
         [HttpGet("List")]
         [ProducesResponseType(typeof(PaginatedDto<IEnumerable<ProductDto>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> ListProductsAsync(
@@ -38,6 +47,9 @@ namespace GHDProductApi.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Endpoint to create a newe product.
+        /// </summary>
         [HttpPost("Add")]
         [ProducesResponseType(typeof(ProductDto), StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateProductAsync(
@@ -50,6 +62,9 @@ namespace GHDProductApi.Controllers
             return CreatedAtAction(nameof(GetProductAsync).Replace("Async", ""), new { id = result.ProductId }, result);
         }
 
+        /// <summary>
+        /// Endpoint to update a product.
+        /// </summary>
         [HttpPut("Update")]
         [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateProductAsync(
@@ -61,6 +76,9 @@ namespace GHDProductApi.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Endpoint to delete a product.
+        /// </summary>
         [HttpDelete]
         [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteProductAsync(
