@@ -24,7 +24,7 @@ This web application is a REST API microservice responsible for CRUD (Create, Re
 - Logs the exceptions that are thrown by the API
 
 ## Test
-- Swagger open Apii / Postman
+- Swagger open Api / Postman
 - Integration tests
 
 ## ToDo
